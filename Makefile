@@ -17,7 +17,7 @@ LTICMD:=$(LTIBASE)/linux/lti-local-config
 #LTICMD:=/usr/local/bin/lti-config
 
 #Example name
-PACKAGE:=tarea2 #$(shell basename $$PWD)
+PACKAGE:=line #$(shell basename $$PWD)
 
 # If you want to generate a debug version, uncomment the next line
 # BUILDRELEASE=yes
