@@ -224,7 +224,7 @@ int main(int argc, char* argv[]) {
 		
       do {
         view.waitInteraction(action,pos); // wait for something to happen
-        if ((action == lti::viewer2D::Closed) && (action.key || lti::viewer2D::EscKey)) { // window closed?
+        if ((action == lti::viewer2D::Closed) || (action.key == lti::viewer2D::EscKey)) { // window closed?
           theEnd = true; // we are ready here!
         } 
         //Bresenham(img, 200, 220, 210, 500);
