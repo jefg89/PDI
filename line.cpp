@@ -145,18 +145,16 @@ int main(int argc, char* argv[]) {
       // wait for the user to close the window or to indicate
       lti::viewer2D::interaction action;
       lti::ipoint pos;
-	
-		cout << (int)img.at(0,2)[1] << endl;
 		
 		for(int i=0;i<img.rows();i++);
 		
 		
       do {
         view.waitInteraction(action,pos); // wait for something to happen
-        if (action == lti::viewer2D::Closed) { // window closed?
+        if ((action == lti::viewer2D::Closed) && (action.key || lti::viewer2D::EscKey)) { // window closed?
           theEnd = true; // we are ready here!
         } 
-        Bresenham(img, 200, 220, 100, 120);
+        Bresenham(img, 200, 220, 210, 500);
         view.show(img);
         
       } while(!theEnd);
@@ -198,11 +196,12 @@ void Bresenham(lti::image &img, float x1, float y1, float x2, float y2)
   {
     if(steep)
     {
-        img.at(y,x) = {0,0,0}; 
+		//img.setColor(lti::Green);
+        img.at(x,y) = lti::rgbaPixel(255,128,0); 
     }
     else
     {
-        img.at(x,y) = {0,0,0}; 
+        img.at(x,y) = lti::rgbaPixel(255,128,0); 
     }
  
     error -= dy;
