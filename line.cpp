@@ -223,8 +223,10 @@ void Bresenham(lti::image &img, float x1, float y1, float x2, float y2)
   {
     if(steep)
     {
-		//img.setColor(lti::Green);
-        //img.at(x,y) =  lti::rgbaPixel::green
+
+
+        img.at(x,y) = lti::rgbaPixel(255,128,0);  
+
     }
     else
     {
