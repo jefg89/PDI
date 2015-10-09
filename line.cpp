@@ -70,10 +70,28 @@ using std::endl;
 using std::swap;
 
 /*  Definir colores */
-static const lti::rgbaPixel mypixel(0,255,0);
+
+/* Primary Colors */
+static const lti::rgbaPixel green(0, 255, 0);
+static const lti::rgbaPixel blue(0, 0, 255);
+static const lti::rgbaPixel red(255, 0, 0);
+
+/* Secondary Colors */
+static const lti::rgbaPixel yellow(255, 255, 0);
+static const lti::rgbaPixel magenta(255, 0, 255);
+static const lti::rgbaPixel cyan(0, 255, 255);
+static const lti::rgbaPixel black(0, 0, 0);
+static const lti::rgbaPixel white(255, 255, 255);
+/* Others */
+static const lti::rgbaPixel orange(255, 165, 0);
+static const lti::rgbaPixel fusia(255, 0, 125);
+static const lti::rgbaPixel tardisblue(16, 35, 114);
+static const lti::rgbaPixel violet(143, 0, 255);
+
 
 
 bool theEnd=false;
+bool thick=false;
 
 
 
@@ -142,7 +160,18 @@ void Bresenham(lti::matrix<T>& img, float x1, float y1, float x2, float y2,  con
 template<typename T>
 void line(lti::matrix<T>& img, const T& color,
 const lti::ipoint& from, const lti::ipoint& to){
-			 Bresenham(img,from.x, from.y, to.x, to.y, color);  		   
+			 if(thick) {
+				 Bresenham(img,from.x-1, from.y-1, to.x-1, to.y-1, color);
+				 Bresenham(img,from.x, from.y-1, to.x, to.y-1, color);
+				 Bresenham(img,from.x-1, from.y, to.x-1, to.y, color);
+				 Bresenham(img,from.x, from.y, to.x, to.y, color);
+				 Bresenham(img,from.x+1, from.y+1, to.x+1, to.y+1, color);	   
+				 Bresenham(img,from.x, from.y+1, to.x, to.y+1, color);	
+				 Bresenham(img,from.x+1, from.y, to.x+1, to.y, color);
+			 }
+			 else {
+				 Bresenham(img,from.x, from.y, to.x, to.y, color);
+			 }
 		   }
 
 /*
@@ -227,15 +256,10 @@ int main(int argc, char* argv[]) {
         if ((action == lti::viewer2D::Closed) || (action.key == lti::viewer2D::EscKey)) { // window closed?
           theEnd = true; // we are ready here!
         } 
-        //Bresenham(img, 200, 220, 210, 500);
         from.set(100,200);
         to.set(200, 100);
-        /*from.x=40;
-        from.y=200;
-        to.x=500;
-        to.y=500;
-        line(img, mypixel,from, to );*/
-        line(img, mypixel,from, to );
+        thick = true;
+        line(img, tardisblue,from, to);
         view.show(img);
         
       } while(!theEnd);
