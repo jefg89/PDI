@@ -70,12 +70,11 @@ using std::endl;
 using std::swap;
 
 /*  Definir colores */
-//static const lti::rgbaPixel mypixel(0,255,0);
+static const lti::rgbaPixel mypixel(0,255,0);
 
 
 bool theEnd=false;
 
-void Bresenham(lti::image &img, float x1, float y1, float x2, float y2);
 
 
 
@@ -90,16 +89,61 @@ void Bresenham(lti::image &img, float x1, float y1, float x2, float y2);
 * @param end Final point of line segment
 */
 
+
+template<typename T>
+void Bresenham(lti::matrix<T>& img, float x1, float y1, float x2, float y2,  const T& color)
+{
+        // Bresenham's line algorithm
+  const bool steep = (fabs(y2 - y1) > fabs(x2 - x1));
+  if(steep)
+  {
+    std::swap(x1, y1);
+    std::swap(x2, y2);
+  }
+ 
+  if(x1 > x2)
+  {
+    std::swap(x1, x2);
+    std::swap(y1, y2);
+  }
+ 
+  const float dx = x2 - x1;
+  const float dy = fabs(y2 - y1);
+ 
+  float error = dx / 2.0f;
+  const int ystep = (y1 < y2) ? 1 : -1;
+  int y = (int)y1;
+ 
+  const int maxX = (int)x2;
+ 
+  for(int x=(int)x1; x<maxX; x++)
+  {
+    if(steep)
+    {
+        img.at(x,y) = color; 
+    }
+    else
+    {
+        img.at(y,x) = color; 
+    }
+ 
+    error -= dy;
+    if(error < 0)
+    {
+        y += ystep;
+        error += dx;
+    }
+  }
+}
+
+
+
+
 template<typename T>
 void line(lti::matrix<T>& img, const T& color,
-           const lti::ipoint& from, const lti::ipoint& to){
-		   
+const lti::ipoint& from, const lti::ipoint& to){
+			 Bresenham(img,from.x, from.y, to.x, to.y, color);  		   
 		   }
-
-
-
-
-
 
 /*
  * Help 
@@ -151,6 +195,8 @@ int main(int argc, char* argv[]) {
 	 std::string filename;
 	 parse(argc,argv,filename);
 	 lti::viewer2D view;
+	 lti::ipoint from;
+	 lti::ipoint to;
   
 	// we need an object to load images
     lti::ioImage loader;
@@ -181,7 +227,15 @@ int main(int argc, char* argv[]) {
         if ((action == lti::viewer2D::Closed) && (action.key || lti::viewer2D::EscKey)) { // window closed?
           theEnd = true; // we are ready here!
         } 
-        Bresenham(img, 200, 220, 210, 500);
+        //Bresenham(img, 200, 220, 210, 500);
+        from.set(100,200);
+        to.set(200, 100);
+        /*from.x=40;
+        from.y=200;
+        to.x=500;
+        to.y=500;
+        line(img, mypixel,from, to );*/
+        line(img, mypixel,from, to );
         view.show(img);
         
       } while(!theEnd);
@@ -193,51 +247,3 @@ int main(int argc, char* argv[]) {
 	
 }
 
-
-void Bresenham(lti::image &img, float x1, float y1, float x2, float y2)
-{
-        // Bresenham's line algorithm
-  const bool steep = (fabs(y2 - y1) > fabs(x2 - x1));
-  if(steep)
-  {
-    std::swap(x1, y1);
-    std::swap(x2, y2);
-  }
- 
-  if(x1 > x2)
-  {
-    std::swap(x1, x2);
-    std::swap(y1, y2);
-  }
- 
-  const float dx = x2 - x1;
-  const float dy = fabs(y2 - y1);
- 
-  float error = dx / 2.0f;
-  const int ystep = (y1 < y2) ? 1 : -1;
-  int y = (int)y1;
- 
-  const int maxX = (int)x2;
- 
-  for(int x=(int)x1; x<maxX; x++)
-  {
-    if(steep)
-    {
-
-
-        img.at(x,y) = lti::rgbaPixel(255,128,0);  
-
-    }
-    else
-    {
-        //img.at(y,x) = lti::rgbaPixel(255,128,0); 
-    }
- 
-    error -= dy;
-    if(error < 0)
-    {
-        y += ystep;
-        error += dx;
-    }
-  }
-}
