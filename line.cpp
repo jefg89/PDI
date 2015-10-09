@@ -69,10 +69,37 @@ using std::cerr;
 using std::endl;
 using std::swap;
 
+/*  Definir colores */
+//static const lti::rgbaPixel mypixel(0,255,0);
+
 
 bool theEnd=false;
 
 void Bresenham(lti::image &img, float x1, float y1, float x2, float y2);
+
+
+
+/**
+* Draw a line segment between two given points.
+*
+* If one or two of the points lie outside the image then this function ...
+*
+* @param img Image where the line is to be drawn
+* @param color Color of the line to be drawn
+* @param from Initial point of line segment
+* @param end Final point of line segment
+*/
+
+template<typename T>
+void line(lti::matrix<T>& img, const T& color,
+           const lti::ipoint& from, const lti::ipoint& to){
+		   
+		   }
+
+
+
+
+
 
 /*
  * Help 
@@ -197,11 +224,11 @@ void Bresenham(lti::image &img, float x1, float y1, float x2, float y2)
     if(steep)
     {
 		//img.setColor(lti::Green);
-        img.at(x,y) = lti::rgbaPixel.setColor(lti::Green); 
+        //img.at(x,y) =  lti::rgbaPixel::green
     }
     else
     {
-        img.at(y,x) = lti::rgbaPixel(255,128,0); 
+        //img.at(y,x) = lti::rgbaPixel(255,128,0); 
     }
  
     error -= dy;
