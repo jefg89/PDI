@@ -186,7 +186,7 @@ const lti::ipoint& from, const lti::ipoint& to){
  */
 void usage() {
   cout << "Usage: line [image] [-option] [-option]" << endl;
-  cout << "Draw a line on the given image\n";
+  cout << "Draw a line fron two mouse points on the given image\n";
   cout << "  -h show this help." << endl;
   cout << "  -t change line's thickness." << endl;
   cout << "  -g change line's color to green" << endl;
