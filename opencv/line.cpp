@@ -17,20 +17,20 @@ using std::swap;
 
 /* Primary Colors */
 static const Vec3b green (0, 255, 0);
-static const Vec3b blue(0, 0, 255);
-static const Vec3b red(255, 0, 0);
+static const Vec3b blue(255, 0, 0);
+static const Vec3b red(0, 0, 255);
 
 /* Secondary Colors */
-static const Vec3b yellow(255, 255, 0);
+static const Vec3b yellow(0, 255, 255);
 static const Vec3b magenta(255, 0, 255);
-static const Vec3b cyan(0, 255, 255);
+static const Vec3b cyan(255, 255, 0);
 static const Vec3b black(0, 0, 0);
 static const Vec3b white(255, 255, 255);
 /* Others */
-static const Vec3b orange(255, 165, 0);
-static const Vec3b fusia(255, 0, 125);
-static const Vec3b tardisblue(16, 35, 114);
-static const Vec3b violet(143, 0, 255);
+static const Vec3b orange(0, 165, 255);
+static const Vec3b fusia(125, 0, 255);
+static const Vec3b tardisblue(114, 35, 16);
+static const Vec3b violet(255, 0, 143);
 
 Vec3b  color_= tardisblue;
 
@@ -217,7 +217,7 @@ int main(int argc, char* argv[]) {
 	std::string filename;
 	parseArgs(argc,argv,filename);
     
-	Mat image = imread(filename);
+	Mat image = imread(filename, CV_LOAD_IMAGE_COLOR);
 	
 	if(image.empty())
     {
